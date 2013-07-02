@@ -1,0 +1,23 @@
+I’ve seen many attempts to implement classical inheritance in JavaScript trying to mimic Java or some other high level programming language.
+When you're used to interfaces and proper inheritance using the 'extends' keyword JavaScript seems to be missing some essential parts.
+
+There are other work around for the missing stuff in JavaScript but for now let's take a pure JavaScript approach to proper inheritance.
+
+All are based on dependencies from libraries or polyfills and might limit portability and code re-use.
+
+And more importantly I really dislike creating classes using object literals. It's ugly.
+ 
+Like these ones:
+http://ejohn.org/blog/simple-javascript-inheritance/
+http://dean.edwards.name/weblog/2006/03/base/
+ 
+I want:
+ 
+No dependencies on libraries, predefined structures or exotic home-brew
+Cross browser compatibility including support for IE 6, 7 and 8, mobile and tablet
+Easy object extension, call to super and method overriding with a compact and concise approach
+Multi level inheritance
+Avoiding calling the super class’ constructor during the prototype phase (bad for a number of reasons)
+ 
+Using EcmaScript 5th edition’s Object.create method backed with a polyfill makes all of the above possible.
+ 

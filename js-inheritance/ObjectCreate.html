@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  	<meta charset="utf-8" />
+</head> 
+<body>
+
+	<div id="output"></div>
+
+	<script>
+		/**
+		* Object.create Polyfill
+		* https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
+		*/
+		if(!Object.create) {
+			Object.create = function (o) {
+				if(arguments.length > 1){
+					throw new Error('Object.create implementation only accepts the first parameter.');
+				}
+				
+				function F(){}
+				F.prototype = o;
+				return new F();
+			}
+		}
+	</script>
+
+	<script>
+		/**
+		* Defining a Person base class
+		*/
+		var Person = function(name){
+			this.name = name;
+		}
+
+		// Define a public method
+		Person.prototype.getName = function(){
+			return this.name;
+		}
+
+		// Define a public method
+		Person.prototype.toString = function(){
+			return '[Object Person]';
+		}
+
+		/**
+		* Defining a Female class extending Person
+		*/
+		var Female = function(name){
+			Person.call(this, name); // Call to super passing the 'name' argument
+		}
+
+		// Extending Female from Person *WITHOUT* calling Person's constructor.
+		Female.prototype = Object.create(Person.prototype);
+
+		// Overriding 'getName' in Person
+		Female.prototype.getName = function(){
+			return 'Hello Im ' + this.name;
+		}
+
+		/**
+		* Client implementation
+		*/
+		
+		var female = new Female('Jane');
+
+
+		// Calling the overridden method
+		console.log(female.getName()); // 'Hello Im Jane'
+
+		// Calling a method in the super class
+		console.log(female.toString()); // '[Object Person]'
+
+		// Output to logging div
+		document.getElementById('output').innerHTML += female.getName() + '<br>';
+		document.getElementById('output').innerHTML += female.toString() + '<br>';
+	</script>
+</body>
+</html>
