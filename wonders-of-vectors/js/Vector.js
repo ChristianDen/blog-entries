@@ -27,5 +27,9 @@ Vector.prototype = {
         this.x += v.x;
         this.y += v.y;
         return this;
+    },
+
+    toString : function(){
+        return '[Vector] x: ' + this.x + ', y: ' + this.y;
     }
 };

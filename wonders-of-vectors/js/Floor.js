@@ -1,23 +1,40 @@
-var Floor = function(floor) {
-	var py;
-  
-	this.v = new Vector(0, 0);
-	this.m = 5.9722 * Math.pow(10, 24); // Mass of the Earth
-	this.r = 10000000;
-	this.p = new Vector(0, py = this.r + floor);
+var Floor = function(x, y, vx, vy) {
 
-	this.update = function() {
-		this.v.x = 0;
-		this.v.y = 0;
-		this.p.x = 0;
-		this.p.y = py;
-	};
-	
-	this.draw = function(ctx) {
-		ctx.save();
-		ctx.fillRect(	ctx.canvas.width / -2, floor, ctx.canvas.width, (ctx.canvas.height) - floor);
-		ctx.restore();
-	}
+    RidgidBody.call(this, x, y, vx, vy);
+
+	this.m = RidgidBody.MAX_MASS;
+	this.r = RidgidBody.MAX_RADIUS;
+
+    //var py = this.r + this.p.y;
+    this.py = this.r + this.p.y;
+
+    console.log('upd: ' + this.p.y)
 };
 
-Floor.prototype = new Ball();
+Floor.prototype = Object.create(RidgidBody.prototype);
+
+//Floor.prototype.draw = function(ctx){
+//    ctx.save();
+//    //ctx.fillRect(ctx.canvas.width / -2, floor, ctx.canvas.width, (ctx.canvas.height) - floor);
+//
+//    ctx.fillRect(this.p.x, this.p.y, ctx.canvas.width, (ctx.canvas.height) - 310);
+//
+//
+//    //ctx.fillRect(this.p.x, this.p.y, ctx.canvas.width, ctx.canvas.height - this.p.y);
+//
+//    //ctx.fillRect(0, 160, ctx.canvas.width, ctx.canvas.height);
+//
+//    //console.log(  0, 0, ctx.canvas.width, ctx.canvas.height )
+//    ctx.stroke();
+//    ctx.restore();
+//};
+
+Floor.prototype.update = function(){
+    this.velocity.x = 0;
+    this.velocity.y = 0;
+    this.p.x = 0;
+    this.p.y = this.py;
+
+
+   // console.log('upd: ' +this.py)
+};

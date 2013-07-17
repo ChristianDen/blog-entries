@@ -1,4 +1,4 @@
-var SimPsy2d = function(container){
+var Simulation1 = function(container){
 
     var MAX_BALLS = 1000,
 
@@ -6,7 +6,8 @@ var SimPsy2d = function(container){
         renderer,
         canvas,
         ctx,
-        balls = [],
+        bodies = [],
+        floor,
         spawnTimerId,
         stats = container.querySelector('#stats');
 
@@ -21,7 +22,7 @@ var SimPsy2d = function(container){
         }
     };
 
-    function toggleSpawn(flag){
+    var toggleSpawn = function(flag){
         if(flag){
             spawnTimerId = setInterval(addBall, 1000 / 4);
             addBall();
@@ -30,62 +31,64 @@ var SimPsy2d = function(container){
         }
     };
 
-    function addBall(){
-        if(balls.length == MAX_BALLS){
+    var addBall = function(){
+        if(bodies.length == MAX_BALLS){
             toggleSpawn(false);
         }
 
         var ball = new Ball(world.width / 2, world.tl.y - 50, (Math.random() * 20) -10, 0);
-        balls.unshift(ball);
+        bodies.unshift(ball);
     };
 
-    function render(){
+    var render = function(){
         renderer.update();
         draw();
-    };
-
-    function draw() {
-        var i, j, ball, len = balls.length;
-
-        for(i = 0; i < len; i++) {
-
-            ball = balls[i];
-            ball.update(world.gravity, renderer.deltaTime, world.ppm);
-
-            // Collision detect
-            for(j = i + 1; j < len; j++) {
-                balls[j].collide(ball);
-            }
-
-            // Remove balls out of stage
-            if(ball.p.x < 0 || ball.p.x > world.width){
-                //balls.splice(i, 1);
-                ball.gc = true;
-            }
-
-            ball.draw(ctx);
-        }
-
-        // Removing balls in the draw loop causes flickering.
-        // A second loop removes balls marked for collection
-        // Performance wise not a good move...  But hey it works!
-        for(var k = 0; k < len; k++) {
-            if(balls[k] && balls[k].gc){
-                balls.splice(k, 1);
-            }
-        }
-
         displayStats();
     };
 
-    function displayStats(){
-        stats.innerHTML = 'Balls on stage: ' + balls.length + '<br>' +
-            'Delta time: ' + (renderer.deltaTime * 1000) + '<br>' +
-            'FPS: ' + renderer.getFps() + '<br>';
+    var draw = function() {
+
+        var i, j, rBody, len = bodies.length;
+
+        for(i = 0; i < len; i++) {
+
+            rBody = bodies[i];
+
+            rBody.update(
+                world.gravity,
+                renderer.deltaTime,
+                world.ppm
+            );
+
+            // Collision detect
+            for(j = i + 1; j < len; j++) {
+                bodies[j].collide(rBody);
+            }
+
+            // Mark bodies out of world bounds for collection
+            if(rBody.p.x < 0 || rBody.p.x > world.width){
+                rBody.gc = true;
+            }
+
+            rBody.draw(ctx);
+        }
+
+        // Removing bodies marked for collection
+        for(var k = 0; k < len; k++) {
+            if(bodies[k] && bodies[k].gc){
+                bodies.splice(k, 1);
+            }
+        }
     };
 
-    function init(){
-        canvas = document.createElement('canvas');
+    var displayStats = _.throttle(function(){
+        stats.innerHTML = 'Rigid bodies rendered: ' + bodies.length + '<br>' +
+            'Delta time: ' + (renderer.deltaTime * 1000) + '<br>' +
+            'FPS: ' + renderer.getFps() + '<br>';
+    }, 500);
+
+    var init = function(){
+        canvas = container.querySelector('canvas');
         canvas.style.border = 'solid 1px #3369ff';
         canvas.style.display = 'block';
         canvas.style.backgroundColor = '#fff';
@@ -93,10 +96,9 @@ var SimPsy2d = function(container){
         canvas.height = world.height;
 
         ctx = canvas.getContext('2d');
-        document.getElementById('container').appendChild(canvas);
 
-        // add the floor
-        balls.push(new Floor(world.height));
+        floor = new Floor(0, world.height - 50, 0, 0);
+        bodies.push(floor);
 
         renderer = new CanvasRenderer(render, canvas);
         renderer.start();
