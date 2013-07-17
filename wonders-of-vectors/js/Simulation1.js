@@ -9,7 +9,8 @@ var Simulation1 = function(container){
         bodies = [],
         floor,
         spawnTimerId,
-        stats = container.querySelector('#stats');
+        stats = container.querySelector('#stats'),
+        count = 0;
 
     this.toggleRender = function(el){
         var r = renderer.toggle();
@@ -37,7 +38,10 @@ var Simulation1 = function(container){
         }
 
         var ball = new Ball(world.width / 2, world.tl.y - 50, (Math.random() * 20) -10, 0);
+        ball.name = "ball";
         bodies.unshift(ball);
+
+        count++;
     };
 
     var render = function(){
@@ -65,9 +69,11 @@ var Simulation1 = function(container){
                 bodies[j].collide(rBody);
             }
 
-            // Mark bodies out of world bounds for collection
-            if(rBody.p.x < 0 || rBody.p.x > world.width){
-                rBody.gc = true;
+            // Mark balls out of world bounds for garbage collection
+            if(rBody.name == 'ball'){
+                if(rBody.p.x < -rBody.r || rBody.p.x - rBody.r > world.width){
+                    rBody.gc = true;
+                }
             }
 
             rBody.draw(ctx);
@@ -82,7 +88,9 @@ var Simulation1 = function(container){
     };
 
     var displayStats = _.throttle(function(){
-        stats.innerHTML = 'Rigid bodies rendered: ' + bodies.length + '<br>' +
+        stats.innerHTML =
+            'Rigid bodies currently rendered: ' + bodies.length + '<br>' +
+            'Rigid bodies created: ' + count + '<br>' +
             'Delta time: ' + (renderer.deltaTime * 1000) + '<br>' +
             'FPS: ' + renderer.getFps() + '<br>';
     }, 500);

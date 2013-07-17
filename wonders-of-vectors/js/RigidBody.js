@@ -32,6 +32,8 @@ var RidgidBody = function(x, y, vx, vy) {
 
     this.rotation = 0;
 
+    this.name = '';
+
     // Eliglible for garbage collection (for instance when object get out of bounds)
     this.gc = false;
 };
