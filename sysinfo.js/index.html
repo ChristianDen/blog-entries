@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>SysInfo.js testing page</title>
+        <script src="http://raw.github.com/ChristianDen/SysInfo/master/dist/sysinfo.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="css/normalize.css" media="screen" />
+        <link rel="stylesheet" href="css/reset.css" media="screen" />
+        <link rel="stylesheet" href="css/style.css" media="screen" />
+    </head>
+    <body>
+
+    <div class="container">
+        <div style="margin-top: 200px;"></div>
+        <h1>SysInfo.js testing page</h1>
+
+        <a href="https://github.com/ChristianDen/SysInfo">https://github.com/ChristianDen/SysInfo</a>
+
+        <script>
+            var sysInfo = new SysInfo();
+            document.body.appendChild(sysInfo.domElement);
+        </script>
+
+        <p>Drag the bookmarklet to the the bookmarks bar:</p>
+
+        <a class="bookmarklet" href="javascript:(function(){var script=document.createElement('script');script.src='http://raw.github.com/ChristianDen/SysInfo/master/dist/sysinfo.min.js';document.body.appendChild(script);script2 = document.createElement('script');script2.innerHTML = 'var interval=setInterval(function(){if(typeof SysInfo==\'function\'){clearInterval(interval);var sysInfo=new SysInfo();document.body.appendChild(sysInfo.domElement);sysInfo.update();}},100);';document.body.appendChild(script2);})()">SysInfo</a>
+        <br><br>
+        <p>The bookmarklet may not work if the host site block the url request to github.<br>Iframes are know to cause issue too</p>
+    </div>
+
+    <footer>
+        <div>
+            <p>Christian Schlosrich 2013</p>
+        </div>
+    </footer>
+
+    </body>
+</html>

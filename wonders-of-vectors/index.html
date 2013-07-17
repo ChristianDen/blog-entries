@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  	<meta charset="utf-8" />
+  	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+  	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head> 
+<body>
+	<script src="js/SimPsy2d.js"></script>
+	<script src="js/World.js"></script>
+  	<script src="js/CanvasRenderer.js"></script>
+  	<script src="js/Vector.js"></script>
+  	<script src="js/Ball.js"></script>
+  	<script src="js/Floor.js"></script>
+
+  	<div id="page-wrap">
+		<section id="SimPsy2d">
+			<h1>The Wonders of Vectors</h1>
+			<div id="container"></div>
+
+			<p id="stats"></p>
+			<button class="button" onclick="sim.toggleRender(this);">Pause</button>
+
+			<h3>2d psysics simulation of colliding bodies using 2d vector math.</h3>
+
+			<a href="http://www.bitninja.me/the-wonders-of-vectors">http://www.bitninja.me/the-wonders-of-vectors</a>
+			<p>Thanks to Stackoverflow user ckozl for the colliding bodies math.</p>
+			<a href="http://stackoverflow.com/questions/9424459/calculate-velocity-and-direction-of-a-ball-to-ball-collision-based-on-mass-and-b">http://stackoverflow.com/questions/9424459/calculate-velocity-and-direction-of-a-ball-to-ball-collision-based-on-mass-and-b</a>
+		</section>
+    </div>
+
+	<script>
+   	    var sim = new SimPsy2d(document.querySelector('#SimPsy2d'));
+	</script>
+</body>
+</html>
