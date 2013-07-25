@@ -56,7 +56,7 @@ var CanvasRenderer = function(update, canvas){
 	};
 
 	this.clearCanvas = function(){
-		this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	};
 
 	this.toggle = function(){
@@ -83,35 +83,31 @@ var CanvasRenderer = function(update, canvas){
 
 	// Provides requestAnimationFrame in a cross browser way. Eric Moeller variation
 	// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-	var initRequestAnimationFrame = function(){
-		var lastTime = 0;
-		var vendors = ['ms', 'moz', 'webkit', 'o'];
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
 
-		for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-			window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-			window.cancelRequestAnimationFrame = window[vendors[x] + 'CancelRequestAnimationFrame'];
-		}
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelRequestAnimationFrame = window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
 
-		if(!window.requestAnimationFrame){
-			window.requestAnimationFrame = function(callback, element) {
-				var currTime = new Date().getTime();
-				var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+    if(!window.requestAnimationFrame){
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
 
-				var id = window.setTimeout(function() { 
-					callback(currTime + timeToCall); 
-				}, timeToCall);
+            var id = window.setTimeout(function() {
+                callback(currTime + timeToCall);
+            }, timeToCall);
 
-				lastTime = currTime + timeToCall;
-				return id;
-			}
-		}
+            lastTime = currTime + timeToCall;
+            return id;
+        }
+    }
 
-		if(!window.cancelRequestAnimationFrame){
-			window.cancelRequestAnimationFrame = function(id) {
-				clearTimeout(id);
-			}
-		}
-	};
-
-	initRequestAnimationFrame();
+    if(!window.cancelRequestAnimationFrame){
+        window.cancelRequestAnimationFrame = function(id) {
+            clearTimeout(id);
+        }
+    }
 };

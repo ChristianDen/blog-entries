@@ -5,10 +5,9 @@ var Floor = function(x, y, vx, vy) {
 	this.m = RidgidBody.MAX_MASS;
 	this.r = RidgidBody.MAX_RADIUS;
 
-    //var py = this.r + this.p.y;
     this.py = this.r + this.p.y;
 
-    console.log('upd: ' + this.p.y)
+    console.log('floor py: ' + this.p.y)
 };
 
 Floor.prototype = Object.create(RidgidBody.prototype);
@@ -30,11 +29,6 @@ Floor.prototype = Object.create(RidgidBody.prototype);
 //};
 
 Floor.prototype.update = function(){
-    this.velocity.x = 0;
-    this.velocity.y = 0;
     this.p.x = 0;
     this.p.y = this.py;
-
-
-   // console.log('upd: ' +this.py)
 };

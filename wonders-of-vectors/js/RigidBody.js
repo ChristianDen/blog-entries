@@ -21,8 +21,6 @@ var RidgidBody = function(x, y, vx, vy) {
     // Radius
     this.r = 10;
 
-    // Bounciness: 0 - 1;
-
     /**
      * Bounciness: 0 - 1
      * 0 = no bounce (solid concreate block)
@@ -121,11 +119,10 @@ RidgidBody.prototype = {
     }
 };
 
-
 RidgidBody.normalize = function(v, min, max){
     return (v - min) / (max - min);
 };
 
 RidgidBody.MAX_MASS = 5.9722 * Math.pow(10, 24); // Mass of the earth
-RidgidBody.MAX_RADIUS = 10000000; // A curvature so large that on a computer screen it is percieved as a straight line
+RidgidBody.MAX_RADIUS = 10000000; // A curvature so large that on a computer screen it is perceived as a straight line
 RidgidBody.DEFAULT_BOUNCE = 0.618;

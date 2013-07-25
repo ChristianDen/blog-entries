@@ -4,22 +4,23 @@
   	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
   	<meta name="apple-mobile-web-app-capable" content="yes">
-  	<link rel="stylesheet" type="text/css" href="css/style.css">
+  	<!--<link rel="stylesheet" type="text/css" href="css/style.css">-->
 </head> 
 <body>
     <script src="js/libs/underscore-min.js"></script>
-    <!--<script src="js/Simulation1.js"></script>-->
-	<!--<script src="js/World.js"></script>-->
-  	<!--<script src="js/CanvasRenderer.js"></script>-->
-    <!--<script src="js/RigidBody.js"></script>-->
-  	<!--<script src="js/Ball.js"></script>-->
-  	<!--<script src="js/Floor.js"></script>-->
-    <!--<script src="js/Vector.js"></script>-->
+    <script src="js/Vector.js"></script>
+    <script src="js/Simulation1.js"></script>
+	<script src="js/World.js"></script>
+  	<script src="js/CanvasRenderer.js"></script>
+    <script src="js/RigidBody.js"></script>
+  	<script src="js/Ball.js"></script>
+  	<script src="js/Floor.js"></script>
 
-    <script src="js/Simulation1.min.js"></script>
+
+    <!--<script src="js/Simulation1.min.js"></script>-->
 
     <section id="simulation1">
-        <canvas></canvas>
+        <canvas style="width: 100%; height: auto;"></canvas>
         <div id="stats"></div>
         <button class="button" onclick="simulation1.toggleRender(this);">Pause</button>
     </section>

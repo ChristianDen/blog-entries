@@ -25,3 +25,13 @@ var World = function(width, height, scale){
 	this.bc 	= {x: this.width / 2, y: this.height};
 	this.br 	= {x: this.width, y: this.height};
 };
+
+World.prototype.update = function(width, height, scale){
+    this.scale = scale || 1;
+    this.width = width * this.scale;
+    this.height = height * this.scale;
+};
+
+World.prototype.toString = function(){
+    return '[World] width: ' + this.width + ', height: ' + this.height + ' scale: ' + this.scale;
+};
